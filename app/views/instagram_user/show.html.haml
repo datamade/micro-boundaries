@@ -41,7 +41,15 @@
     var photos = #{@mapped_photos};
     for(var photo in photos){
       // lat/lng location exists. map it
-      var m = new L.CircleMarker( new L.LatLng( photos[photo].latitude * 1.0, photos[photo].longitude * 1.0 ), {color: '#f50f43'} );
+      var m = new L.CircleMarker(
+        new L.LatLng( photos[photo].latitude * 1.0, photos[photo].longitude * 1.0 ),
+        {
+          color: $('.' + photos[photo].tag).css("background-color"),
+          weight: 3,
+          fillOpacity: 0.7,
+          opacity: 0.7
+        }
+      );
       LeafletLib.enableMarker(m, photos[photo]);
       LeafletLib.addMarker( m );
     }
@@ -50,7 +58,8 @@
 
 %h1 
   %img.img-polaroid.user-photo{ :src => @user.profile_picture }
-  #{@user.username}
+  %a{:href => "http://instagram.com/#{@user.username}", :target => "_blank"}
+    #{@user.username}
   %small 
     - if @user.score == 1
       #{@user.score} point
@@ -64,7 +73,8 @@
     %ul.thumbnails
       - @recent_photos.each_with_index do |photo, index|
         %li.span2.text-center
-          %img.img-polaroid{ :src => photo.image_url }
+          %a{ :href => "http://instagram.com/p/#{photo.instagram_photo_id}", :target => "_blank" }
+            %img.img-polaroid{ :src => photo.image_url }
           %br
           %span.badge 
             - if photo.score == 1
