@@ -1,7 +1,7 @@
 # copied from https://blog.heroku.com/archives/2013/2/27/unicorn_rails
 # config/unicorn.rb
 worker_processes 3
-timeout 30
+timeout 60
 preload_app true
 
 before_fork do |server, worker|

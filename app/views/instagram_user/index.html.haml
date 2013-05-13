@@ -10,6 +10,7 @@
     .span2
       %h3
         %a{ :href => "/user/#{user.username}" } #{user.username}
+        %br
         - if user.score == 1
           %small 1 point
         - else
