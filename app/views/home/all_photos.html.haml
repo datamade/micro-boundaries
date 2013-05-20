@@ -1,0 +1,20 @@
+%h2 All photos (#{@all_photos.length})
+
+%ul.thumbnails
+  - @all_photos.each_with_index do |photo, index|
+    %li.span2.text-center
+      %a{ :href => "http://instagram.com/p/#{photo.instagram_photo_id}", :target => "_blank" }
+        %img.img-polaroid{ :src => photo.image_url }
+      %br
+      %span.badge 
+        - if photo.score == 1
+          #{photo.score} point
+        - else
+          #{photo.score} points
+      
+      %a{:href => "/microbe/#{photo.tag}"}
+        %span{:class => "badge #{photo.tag}"} ##{photo.tag}
+      %p
+        = photo.caption
+    - if (index + 1) % 6 == 0
+      .clearfix 

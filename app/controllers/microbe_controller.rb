@@ -1,4 +1,5 @@
 class MicrobeController < ApplicationController
+  caches_action :show
 
   def show
     @microbe = Microbe.where( "tag = ?", params[ :tag ] ).first

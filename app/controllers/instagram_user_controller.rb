@@ -1,4 +1,5 @@
 class InstagramUserController < ApplicationController
+  caches_action :index, :show
 
   def index # also leaderboard
     @users = InstagramUser.order("score DESC").all

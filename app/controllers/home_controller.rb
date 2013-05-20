@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   include ApplicationHelper
-  caches_action :index
+  caches_action :index, :all_photos, :start
 
   def index
 
@@ -10,12 +10,18 @@ class HomeController < ApplicationController
     # end
 
     @microbes = ApplicationHelper.microbes
-    @users = InstagramUser.order("score DESC")[0..2]
     all_photos = InstagramPhoto.select("instagram_photos.*, instagram_users.username, microbes.tag")
                                .joins("JOIN instagram_users on instagram_users.id = instagram_photos.instagram_user_id")
                                .joins("JOIN microbes on microbes.id = instagram_photos.microbe_id")
     @mapped_photos = ActiveSupport::JSON.encode(all_photos)
 
+  end
+
+  def all_photos
+    @all_photos = InstagramPhoto.select("instagram_photos.*, instagram_users.username, microbes.tag")
+                                .joins("JOIN instagram_users on instagram_users.id = instagram_photos.instagram_user_id")
+                                .joins("JOIN microbes on microbes.id = instagram_photos.microbe_id")
+                                .order("created_time DESC").all
   end
 
   def refresh_photos

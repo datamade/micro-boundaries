@@ -13,6 +13,7 @@ MicroBoundaries::Application.routes.draw do
   get "/scoring" => "home#scoring"
   get "/about" => "home#about"
 
+  get "/all" => "home#all_photos"
   root :to => "home#index"
   
 end
